@@ -12,47 +12,61 @@
     --blue: #0F3D6E;
     --blue-soft: #4A6D93;
     --gold: #B8862E;
+    --gold-light: #D9AE5D;
     --maroon: #76251F;
     --maroon-deep: #5A1B16;
     --paper: #FFFFFF;
     --paper-dim: #F7F5F0;
+    --ivory: #FBF9F4;
     --ink: #22262B;
     --ink-soft: #5B5F66;
     --line: rgba(15,61,110,0.14);
+    --shadow-sm: 0 1px 3px rgba(15,61,110,0.07);
+    --shadow-md: 0 14px 34px rgba(15,61,110,0.10);
+    --shadow-lg: 0 30px 70px rgba(15,61,110,0.20);
+    --accent-bar: 4px;
   }
-
   *{ margin:0; padding:0; box-sizing:border-box; }
-
   html{ scroll-behavior:smooth; }
-
   body{
     font-family:'Work Sans', sans-serif;
     line-height:1.75;
     color:var(--ink);
     background-color:var(--paper);
-    padding-top:80px;
+    padding-top:calc(80px + var(--accent-bar));
   }
-
   h1,h2,h3{
     font-family:'Fraunces', serif;
     font-weight:500;
     color:var(--blue);
     letter-spacing:-0.01em;
   }
-
   a{ color:inherit; }
+  ::selection{ background:rgba(184,134,46,0.25); }
+
+  /* ---------- Top accent bar ---------- */
+  .top-accent-bar{
+    position:fixed;
+    top:0; left:0;
+    width:100%;
+    height:var(--accent-bar);
+    background:linear-gradient(90deg, var(--maroon) 0%, var(--gold) 50%, var(--blue) 100%);
+    z-index:1002;
+  }
 
   /* ---------- Nav ---------- */
   nav{
-    background:var(--paper);
+    background:rgba(255,255,255,0.92);
+    -webkit-backdrop-filter:blur(10px);
+    backdrop-filter:blur(10px);
     padding:1.1rem 0;
     position:fixed;
     width:100%;
-    top:0; left:0;
+    top:var(--accent-bar); left:0;
     z-index:1000;
     border-bottom:1px solid var(--line);
+    box-shadow:var(--shadow-sm);
   }
-
   .nav-container{
     max-width:1180px;
     margin:0 auto;
@@ -61,7 +75,6 @@
     align-items:center;
     padding:0 2rem;
   }
-
   .logo{
     color:var(--blue);
     font-family:'Fraunces', serif;
@@ -73,7 +86,6 @@
     gap:0.7rem;
     letter-spacing:0.01em;
   }
-
   .logo-mark{
     flex:none;
     display:flex;
@@ -81,18 +93,17 @@
     justify-content:center;
     width:38px;
     height:38px;
+    border-radius:50%;
+    box-shadow:0 0 0 1px var(--line), 0 0 0 4px rgba(184,134,46,0.08);
   }
-  .logo-mark img{ display:block; height:38px; width:38px; object-fit:contain; }
-
+  .logo-mark img{ display:block; height:38px; width:38px; object-fit:contain; border-radius:50%; }
   .brand-mark{ flex:none; display:block; }
-
   nav ul{
     list-style:none;
     display:flex;
     gap:2.4rem;
     align-items:center;
   }
-
   nav a{
     color:var(--ink);
     text-decoration:none;
@@ -102,13 +113,21 @@
     letter-spacing:0.09em;
     opacity:0.75;
     transition:opacity 0.2s, color 0.2s;
+    position:relative;
   }
-
+  nav li > a:not(.cta-button)::after{
+    content:'';
+    position:absolute;
+    left:0; bottom:-6px;
+    width:0%; height:1px;
+    background:var(--gold);
+    transition:width 0.25s ease;
+  }
+  nav li > a:not(.cta-button):hover::after{ width:100%; }
   nav a:hover{ opacity:1; color:var(--blue); }
-
   .cta-button{
     display:inline-block;
-    background:var(--maroon);
+    background:linear-gradient(135deg, var(--maroon) 0%, var(--maroon-deep) 100%);
     color:#fff !important;
     padding:0.8rem 2rem;
     border-radius:2px;
@@ -117,23 +136,39 @@
     letter-spacing:0.03em;
     font-size:0.82rem;
     text-transform:uppercase;
-    transition:background 0.2s;
+    transition:background 0.25s, box-shadow 0.25s, transform 0.25s;
     opacity:1 !important;
+    box-shadow:0 10px 22px rgba(118,37,31,0.22);
   }
-
-  .cta-button:hover{ background:var(--maroon-deep); }
-
+  .cta-button:hover{ background:linear-gradient(135deg, var(--maroon-deep) 0%, #400f0c 100%); transform:translateY(-2px); box-shadow:0 16px 30px rgba(118,37,31,0.30); }
   nav .cta-button{ padding:0.6rem 1.4rem; font-size:0.75rem; letter-spacing:0.08em; }
 
   /* ---------- Hero ---------- */
   .hero{
-    background:var(--paper);
-    padding:6.5rem 2rem 5.5rem;
+    position:relative;
+    overflow:hidden;
+    background:
+      radial-gradient(ellipse 60% 50% at 50% -10%, rgba(15,61,110,0.06), transparent 65%),
+      var(--paper);
+    padding:7rem 2rem 6rem;
     text-align:center;
     max-width:900px;
     margin:0 auto;
   }
-
+  .hero-watermark{
+    position:absolute;
+    top:50%; left:50%;
+    transform:translate(-50%,-50%);
+    width:560px;
+    max-width:none;
+    height:auto;
+    opacity:0.045;
+    filter:grayscale(1);
+    pointer-events:none;
+    z-index:0;
+    user-select:none;
+  }
+  .hero > *{ position:relative; z-index:1; }
   .hero .eyebrow{
     text-transform:uppercase;
     letter-spacing:0.2em;
@@ -141,19 +176,27 @@
     color:var(--gold);
     font-weight:600;
     margin-bottom:1.3rem;
-    display:inline-block;
+    display:inline-flex;
+    align-items:center;
+    gap:0.6rem;
     padding-bottom:1rem;
     border-bottom:1px solid var(--line);
   }
-
+  .hero .eyebrow::before,
+  .hero .eyebrow::after{
+    content:'✦';
+    font-size:0.6rem;
+    color:var(--gold-light);
+    opacity:0.8;
+  }
   .hero h1{
-    font-size:2.9rem;
+    font-size:2.95rem;
     color:var(--blue);
     margin-bottom:1.3rem;
     line-height:1.18;
     font-weight:500;
+    text-shadow:0 1px 0 rgba(255,255,255,0.4);
   }
-
   .hero p{
     font-size:1.1rem;
     max-width:600px;
@@ -167,7 +210,6 @@
     max-width:1180px;
     margin:0 auto;
   }
-
   .eyebrow-small{
     text-transform:uppercase;
     letter-spacing:0.16em;
@@ -178,13 +220,32 @@
     margin-bottom:0.6rem;
     text-align:center;
   }
-
   .section-title{
     text-align:center;
     font-size:2rem;
     color:var(--blue);
     margin-bottom:2.8rem;
     font-weight:500;
+    position:relative;
+  }
+  .section-title::after{
+    content:'';
+    display:block;
+    width:64px;
+    height:2px;
+    margin:1rem auto 0;
+    background:linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .section-title.section-title-left::after{
+    margin:1rem 0 0;
+    background:linear-gradient(90deg, var(--gold), transparent);
+  }
+
+  /* ---------- Reveal-on-scroll ---------- */
+  .reveal{ opacity:0; transform:translateY(18px); transition:opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.in-view{ opacity:1; transform:none; }
+  @media (prefers-reduced-motion: reduce){
+    .reveal{ opacity:1; transform:none; transition:none; }
   }
 
   /* ---------- About ---------- */
@@ -193,22 +254,25 @@
     padding-top:1.5rem;
     border-top:1px solid var(--line);
   }
-
   .about-text p{ color:var(--ink-soft); margin-bottom:1.1rem; font-size:1.05rem; }
   .about-text p strong{ color:var(--blue); }
+  .about-text p:first-of-type{
+    padding-left:1.2rem;
+    border-left:2px solid var(--gold);
+  }
 
   /* ---------- Mission ---------- */
   .mission{
-    background:var(--paper-dim);
+    background-color:var(--paper-dim);
+    background-image:radial-gradient(rgba(15,61,110,0.06) 1px, transparent 1px);
+    background-size:24px 24px;
     width:100%;
     border-top:1px solid var(--line);
     border-bottom:1px solid var(--line);
   }
-
   .mission-inner{ max-width:1180px; margin:0 auto; }
   .mission-content{ text-align:center; }
   .mission-content > p{ color:var(--ink-soft); }
-
   .mission-list{
     list-style:none;
     text-align:left;
@@ -218,7 +282,6 @@
     flex-direction:column;
     gap:1.1rem;
   }
-
   .mission-list li{
     display:flex;
     align-items:flex-start;
@@ -227,15 +290,16 @@
     font-weight:500;
     padding-bottom:1.1rem;
     border-bottom:1px solid var(--line);
+    transition:transform 0.25s ease;
   }
-
+  .mission-list li:hover{ transform:translateX(4px); }
   .mission-list li:last-child{ border-bottom:none; padding-bottom:0; }
-
   .mission-list .mark{
     flex:none;
     width:20px; height:20px;
     border-radius:2px;
-    background:var(--gold);
+    background:linear-gradient(135deg, var(--gold-light), var(--gold));
+    box-shadow:0 3px 8px rgba(184,134,46,0.35);
     color:#fff;
     display:flex;
     align-items:center;
@@ -252,14 +316,14 @@
     gap:2rem;
     margin-bottom:2.6rem;
   }
-
   .reg-card{
     border-top:2px solid var(--blue);
     padding:1.6rem 0 0;
+    transition:transform 0.25s ease, box-shadow 0.25s ease;
+    border-radius:1px;
   }
-
+  .reg-card:hover{ transform:translateY(-3px); box-shadow:var(--shadow-md); }
   .reg-card h3{ font-size:0.95rem; margin-bottom:1.1rem; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; }
-
   .reg-card dl div{
     display:flex;
     justify-content:space-between;
@@ -267,28 +331,23 @@
     padding:0.55rem 0;
     border-bottom:1px solid var(--line);
   }
-
   .reg-card dl div:last-child{ border-bottom:none; }
-
   .reg-card dt{
     color:var(--ink-soft);
     font-size:0.86rem;
     flex:none;
     width:42%;
   }
-
   .reg-card dd{
     font-weight:600;
     font-size:0.9rem;
     text-align:right;
     color:var(--blue);
   }
-
   .leadership{
     border-top:1px solid var(--line);
     padding-top:2rem;
   }
-
   .leadership-title{
     font-size:1rem;
     margin-bottom:1.5rem;
@@ -297,7 +356,6 @@
     letter-spacing:0.08em;
     font-weight:600;
   }
-
   .leadership-grid{
     display:grid;
     grid-template-columns:repeat(auto-fit, minmax(210px, 1fr));
@@ -306,7 +364,6 @@
     border-top:1px solid var(--line);
     border-left:1px solid var(--line);
   }
-
   .leader-card{
     padding:1.3rem 1.2rem;
     border-right:1px solid var(--line);
@@ -315,10 +372,10 @@
     flex-direction:column;
     gap:0.3rem;
     text-align:center;
+    transition:background 0.25s ease;
   }
-
-  .leader-card.founder{ background:var(--paper-dim); }
-
+  .leader-card:hover{ background:var(--ivory); }
+  .leader-card.founder{ background:var(--paper-dim); box-shadow:inset 0 2px 0 var(--gold); }
   .leader-card .role{
     font-size:0.72rem;
     text-transform:uppercase;
@@ -326,19 +383,16 @@
     color:var(--gold);
     font-weight:600;
   }
-
   .leader-card .name{
     font-family:'Fraunces', serif;
     font-size:1rem;
     color:var(--blue);
   }
-
   .members-row{
     text-align:center;
     padding-top:1.2rem;
     border-top:1px solid var(--line);
   }
-
   .members-label{
     display:block;
     font-size:0.72rem;
@@ -348,14 +402,12 @@
     margin-bottom:0.9rem;
     font-weight:600;
   }
-
   .members-grid{
     display:flex;
     flex-wrap:wrap;
     justify-content:center;
     gap:0.6rem;
   }
-
   .member-chip{
     border:1px solid var(--line);
     border-radius:2px;
@@ -364,8 +416,9 @@
     color:var(--blue);
     font-weight:500;
     white-space:nowrap;
+    transition:border-color 0.2s ease, background 0.2s ease;
   }
-
+  .member-chip:hover{ border-color:var(--gold); background:var(--ivory); }
   .member-chip.member-chip-long{
     white-space:normal;
     max-width:340px;
@@ -384,9 +437,15 @@
     padding:2rem;
     z-index:2000;
   }
-
   .modal-overlay[hidden]{ display:none; }
-
+  .modal-overlay:not([hidden]){ animation:overlayFadeIn 0.25s ease; }
+  .modal-overlay:not([hidden]) .modal-card{ animation:modalCardIn 0.32s cubic-bezier(0.2,0.8,0.2,1); }
+  @keyframes overlayFadeIn{ from{ opacity:0; } to{ opacity:1; } }
+  @keyframes modalCardIn{ from{ opacity:0; transform:translateY(14px) scale(0.98); } to{ opacity:1; transform:none; } }
+  @media (prefers-reduced-motion: reduce){
+    .modal-overlay:not([hidden]),
+    .modal-overlay:not([hidden]) .modal-card{ animation:none; }
+  }
   .modal-card{
     position:relative;
     background:var(--paper);
@@ -396,15 +455,14 @@
     overflow-y:auto;
     padding:2.8rem 2.4rem 2.4rem;
     border-top:3px solid var(--blue);
+    box-shadow:var(--shadow-lg);
   }
-
   .modal-title{
     text-align:left;
     font-size:1.6rem;
     margin-bottom:1.8rem;
     font-weight:500;
   }
-
   .modal-close{
     position:absolute;
     top:1.1rem;
@@ -421,13 +479,9 @@
     justify-content:center;
     transition:background 0.2s, color 0.2s;
   }
-
   .modal-close:hover{ background:var(--blue); color:#fff; }
-
   .modal-card .leadership-grid{ margin-bottom:1.6rem; }
-
   .modal-card .members-row{ border-top:1px solid var(--line); padding-top:1.2rem; }
-
   @media (max-width:640px){
     .modal-card{ padding:2.2rem 1.3rem 1.8rem; }
     .reg-grid{ grid-template-columns:1fr; }
@@ -441,36 +495,64 @@
     border-top:1px solid var(--line);
     border-left:1px solid var(--line);
   }
-
   .impact-card{
+    position:relative;
     padding:2.2rem 1.9rem;
     text-align:left;
     border-right:1px solid var(--line);
     border-bottom:1px solid var(--line);
-    transition:background 0.2s;
+    transition:background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+    overflow:hidden;
   }
-
-  .impact-card:hover{ background:var(--paper-dim); }
-
+  .impact-card::before{
+    content:'';
+    position:absolute;
+    top:0; left:0;
+    width:100%; height:3px;
+    background:linear-gradient(90deg, var(--gold), var(--blue));
+    transform:scaleX(0);
+    transform-origin:left;
+    transition:transform 0.3s ease;
+  }
+  .impact-card:hover{ background:var(--ivory); transform:translateY(-4px); box-shadow:var(--shadow-md); z-index:1; }
+  .impact-card:hover::before{ transform:scaleX(1); }
   .impact-icon{
-    font-size:1.7rem;
-    margin-bottom:1rem;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:52px; height:52px;
+    border-radius:50%;
+    background:linear-gradient(135deg, rgba(15,61,110,0.08), rgba(184,134,46,0.14));
+    font-size:1.5rem;
+    margin-bottom:1.1rem;
   }
-
   .impact-card h3{ font-size:1.1rem; margin-bottom:0.6rem; font-weight:500; }
   .impact-card p{ color:var(--ink-soft); font-size:0.95rem; }
 
   /* ---------- CSR Partnership ---------- */
   .csr-section-wrapper{
+    position:relative;
     background:var(--paper-dim);
     width:100%;
     border-top:1px solid var(--line);
     border-bottom:1px solid var(--line);
+    overflow:hidden;
   }
-
-  .csr-section{ color:var(--ink); }
+  .csr-watermark{
+    position:absolute;
+    top:50%; right:-6%;
+    transform:translateY(-50%);
+    width:460px;
+    max-width:none;
+    height:auto;
+    opacity:0.05;
+    filter:grayscale(1);
+    pointer-events:none;
+    z-index:0;
+    user-select:none;
+  }
+  .csr-section{ color:var(--ink); position:relative; z-index:1; }
   .csr-section .section-title{ color:var(--blue); }
-
   .csr-layout{
     display:grid;
     grid-template-columns:0.9fr 1.1fr;
@@ -478,11 +560,12 @@
     align-items:center;
     text-align:left;
   }
-
   .csr-photo-frame{
     border:1px solid var(--line);
+    padding:0.5rem;
+    background:var(--paper);
+    box-shadow:var(--shadow-md);
   }
-
   .csr-photo-frame img{
     width:100%;
     height:auto;
@@ -491,33 +574,60 @@
     object-position:center top;
     display:block;
   }
-
   .csr-copy{ text-align:left; }
-
   .csr-text{
     max-width:560px;
-    margin:0 0 2rem;
+    margin:0 0 1.6rem;
     font-size:1.05rem;
     color:var(--ink-soft);
   }
-
+  .csr-badges{
+    display:flex;
+    flex-wrap:wrap;
+    gap:0.7rem;
+    margin-bottom:2rem;
+  }
+  .csr-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:0.4rem;
+    background:var(--paper);
+    border:1px solid var(--line);
+    padding:0.5rem 0.9rem;
+    font-size:0.78rem;
+    font-weight:600;
+    letter-spacing:0.03em;
+    color:var(--blue);
+    text-transform:uppercase;
+  }
+  .csr-badge::before{ content:'✓'; color:var(--gold); font-weight:700; }
   @media (max-width:820px){
     .csr-layout{ grid-template-columns:1fr; text-align:center; }
     .csr-copy{ text-align:center; }
-    .csr-text{ margin:0 auto 2rem; }
+    .csr-text{ margin:0 auto 1.6rem; }
+    .csr-badges{ justify-content:center; }
   }
 
   /* ---------- Footer ---------- */
   footer{
+    position:relative;
     background:var(--paper);
+    background-image:radial-gradient(rgba(15,61,110,0.05) 1px, transparent 1px);
+    background-size:24px 24px;
     color:var(--ink);
-    padding:3rem 2rem 2.2rem;
+    padding:3.2rem 2rem 2.2rem;
     text-align:center;
     border-top:1px solid var(--line);
   }
-
+  footer::before{
+    content:'';
+    position:absolute;
+    top:0; left:50%;
+    transform:translateX(-50%);
+    width:120px; height:2px;
+    background:linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
   .footer-content{ max-width:1180px; margin:0 auto; }
-
   .footer-content .footer-name{
     font-family:'Fraunces', serif;
     font-size:1.05rem;
@@ -525,7 +635,6 @@
     margin-bottom:0.6rem;
     font-weight:500;
   }
-
   .footer-links{
     display:flex;
     gap:1.8rem;
@@ -533,17 +642,25 @@
     margin:1.3rem 0;
     flex-wrap:wrap;
   }
-
   .footer-links a{
     color:var(--ink-soft);
     text-decoration:none;
     font-size:0.78rem;
     text-transform:uppercase;
     letter-spacing:0.07em;
+    position:relative;
+    padding-bottom:2px;
   }
-
+  .footer-links a::after{
+    content:'';
+    position:absolute;
+    left:0; bottom:0;
+    width:0%; height:1px;
+    background:var(--gold);
+    transition:width 0.25s ease;
+  }
   .footer-links a:hover{ color:var(--blue); }
-
+  .footer-links a:hover::after{ width:100%; }
   .footer-content p.fine{
     opacity:0.6;
     font-size:0.8rem;
@@ -552,18 +669,20 @@
 
   /* ---------- Responsive ---------- */
   @media (max-width:768px){
-    body{ padding-top:68px; }
+    body{ padding-top:calc(68px + var(--accent-bar)); }
     .nav-container{ flex-direction:column; gap:0.9rem; padding:0.7rem 1.2rem; }
+    nav{ top:var(--accent-bar); }
     nav ul{ gap:1.2rem; flex-wrap:wrap; justify-content:center; }
     .hero{ padding:3.5rem 1.5rem; }
     .hero h1{ font-size:2rem; }
+    .hero-watermark{ width:340px; }
     section{ padding:3.2rem 1.5rem; }
     .reg-grid{ grid-template-columns:1fr; }
   }
 </style>
 </head>
 <body>
-
+  <div class="top-accent-bar" aria-hidden="true"></div>
   <!-- Navigation -->
   <nav>
     <div class="nav-container">
@@ -583,25 +702,24 @@
       </ul>
     </div>
   </nav>
-
   <!-- Hero -->
   <section class="hero">
+    <img src="logo.png" alt="" class="hero-watermark" aria-hidden="true" onerror="this.remove()">
     <span class="eyebrow">Regd. No. HLS-4-00364-2013-14 · Cox Town, Bengaluru</span>
     <h1>Sri Bala-krishna Charitable Trust</h1>
     <p>A registered charitable trust based in Bengaluru, committed to community development, education, and environmental conservation.</p>
     <a href="#csr" class="cta-button">Become Our CSR Partner</a>
   </section>
-
   <!-- About -->
   <section id="about">
     <span class="eyebrow-small" style="text-align:left; display:block;">Who We Are</span>
-    <h2 class="section-title" style="text-align:left; margin-bottom:2.5rem;">About Us</h2>
+    <h2 class="section-title section-title-left" style="text-align:left; margin-bottom:2.5rem;">About Us</h2>
     <div class="about-text">
       <p><strong>Sri Bala-krishna Charitable Trust (Regd.)</strong> is a registered charitable trust founded in 2013 and based at Cox Town, Bengaluru. The trust was established with a vision to empower communities, support education, and promote environmental sustainability.</p>
       <p>Our mission extends beyond charity — we build lasting partnerships with organizations and individuals who share our vision of a better world.</p>
+      <p><strong>Established:</strong> 2013</p>
     </div>
   </section>
-
   <!-- Mission -->
   <div class="mission">
     <section class="mission-inner" id="mission">
@@ -610,55 +728,57 @@
       <div class="mission-content">
         <p>We believe in creating measurable, sustainable impact through:</p>
         <ul class="mission-list">
-          <li><span class="mark">✓</span> Empowering communities with access to quality education</li>
-          <li><span class="mark">✓</span> Supporting healthcare initiatives for underserved populations</li>
-          <li><span class="mark">✓</span> Promoting environmental conservation and sustainability</li>
-          <li><span class="mark">✓</span> Building infrastructure that serves vulnerable communities</li>
+          <li class="reveal"><span class="mark">✓</span> Empowering communities with access to quality education</li>
+          <li class="reveal"><span class="mark">✓</span> Supporting healthcare initiatives for underserved populations</li>
+          <li class="reveal"><span class="mark">✓</span> Promoting environmental conservation and sustainability</li>
+          <li class="reveal"><span class="mark">✓</span> Building infrastructure that serves vulnerable communities</li>
         </ul>
       </div>
     </section>
   </div>
-
   <!-- Impact Areas -->
   <section id="impact">
     <span class="eyebrow-small">Where We Work</span>
     <h2 class="section-title">Our Impact Areas</h2>
     <div class="impact-grid">
-      <div class="impact-card">
+      <div class="impact-card reveal">
         <div class="impact-icon">📚</div>
         <h3>Education Support</h3>
         <p>Focus area: scholarships, learning materials, and educational infrastructure for underprivileged children.</p>
       </div>
-      <div class="impact-card">
+      <div class="impact-card reveal">
         <div class="impact-icon">💧</div>
         <h3>Water &amp; Sanitation</h3>
         <p>Focus area: clean water access and sanitation facilities for rural communities.</p>
       </div>
-      <div class="impact-card">
+      <div class="impact-card reveal">
         <div class="impact-icon">🌱</div>
         <h3>Environmental Conservation</h3>
         <p>Focus area: green coverage, waste recycling initiatives, and community afforestation.</p>
       </div>
     </div>
   </section>
-
   <!-- CSR Partnership -->
   <div class="csr-section-wrapper">
+    <img src="logo.png" alt="" class="csr-watermark" aria-hidden="true" onerror="this.remove()">
     <section class="csr-section" id="csr">
       <span class="eyebrow-small">Corporate Social Responsibility</span>
       <h2 class="section-title">Partner With Us</h2>
       <div class="csr-layout">
-        <div class="csr-photo-frame">
+        <div class="csr-photo-frame reveal">
           <img src="sribalakrishnacharitabletrust.jpg" alt="Sri Bala-krishna Charitable Trust" loading="lazy">
         </div>
-        <div class="csr-copy">
-          <p class="csr-text">Align your organization's CSR mandate with a registered trust (Regd. No. HLS-4-00364-2013-14) working in education, healthcare access, water &amp; sanitation, and environmental sustainability. The trust holds Registration under Section 12AB and approval under Section 80G of the Income-tax Act, 1961. We welcome conversations with corporate partners looking to design CSR programs together.</p>
+        <div class="csr-copy reveal">
+          <p class="csr-text">Align your organization's CSR mandate with a registered trust (Regd. No. HLS-4-00364-2013-14) working in education, healthcare access, water &amp; sanitation, and environmental sustainability. The trust holds Registration under Section 12AB and approval under Section 80G of the Income-Tax Act, 1961. We welcome conversations with corporate partners looking to design CSR programs together.</p>
+          <div class="csr-badges">
+            <span class="csr-badge">12AB Registered</span>
+            <span class="csr-badge">80G Approved</span>
+          </div>
           <a href="#contact" class="cta-button">Start a Partnership Conversation</a>
         </div>
       </div>
     </section>
   </div>
-
   <!-- Footer -->
   <footer id="contact">
     <div class="footer-content">
@@ -672,7 +792,6 @@
       <p class="fine">© 2026 Sri Bala-krishna Charitable Trust (Regd.) · HLS-4-00364-2013-14 · Cox Town, Bengaluru. All rights reserved.</p>
     </div>
   </footer>
-
   <!-- Registration Modal -->
   <div class="modal-overlay" id="registration-modal" hidden>
     <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="registration-modal-title">
@@ -694,11 +813,11 @@
             <div><dt>Telephone</dt><dd>+91 80 4132 2647 / 8549 8051 59</dd></div>
             <div><dt>Mobile</dt><dd>+91 94481 07035</dd></div>
             <div><dt>Email</dt><dd>beekaytrust@gmail.com</dd></div>
-            <div><dt>Website</dt><dd>www.balakrishnatrust.com</dd></div>
+            <div><dt>Website</dt><dd>[www.balakrishnatrust.com](https://www.balakrishnatrust.com)</dd></div>
           </dl>
         </div>
         <div class="reg-card">
-          <h3>Income-tax Act, 1961 Status</h3>
+          <h3>Income-Tax Act, 1961 Status</h3>
           <dl>
             <div><dt>Registration</dt><dd>Section 12AB</dd></div>
             <div><dt>Approval</dt><dd>Section 80G</dd></div>
@@ -707,7 +826,6 @@
       </div>
     </div>
   </div>
-
   <!-- Leadership Modal -->
   <div class="modal-overlay" id="leadership-modal" hidden>
     <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="leadership-modal-title">
@@ -742,14 +860,12 @@
       </div>
     </div>
   </div>
-
   <script>
     (function(){
       var openLinks = document.querySelectorAll('[data-modal-open]');
       var closeEls = document.querySelectorAll('[data-modal-close]');
       var overlays = document.querySelectorAll('.modal-overlay');
       var lastFocused = null;
-
       function openModal(id){
         var modal = document.getElementById(id);
         if(!modal) return;
@@ -759,32 +875,27 @@
         var closeBtn = modal.querySelector('.modal-close');
         if(closeBtn) closeBtn.focus();
       }
-
       function closeModal(modal){
         modal.hidden = true;
         document.body.style.overflow = '';
         if(lastFocused) lastFocused.focus();
       }
-
       openLinks.forEach(function(link){
         link.addEventListener('click', function(e){
           e.preventDefault();
           openModal(link.getAttribute('data-modal-open'));
         });
       });
-
       closeEls.forEach(function(btn){
         btn.addEventListener('click', function(){
           closeModal(btn.closest('.modal-overlay'));
         });
       });
-
       overlays.forEach(function(overlay){
         overlay.addEventListener('click', function(e){
           if(e.target === overlay) closeModal(overlay);
         });
       });
-
       document.addEventListener('keydown', function(e){
         if(e.key === 'Escape'){
           overlays.forEach(function(overlay){
@@ -792,6 +903,24 @@
           });
         }
       });
+    })();
+  </script>
+  <script>
+    (function(){
+      // Subtle scroll-reveal for premium feel; safe no-op if IntersectionObserver unsupported.
+      if(!('IntersectionObserver' in window)){
+        document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in-view'); });
+        return;
+      }
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if(entry.isIntersecting){
+            entry.target.classList.add('in-view');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold:0.15, rootMargin:'0px 0px -40px 0px' });
+      document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
     })();
   </script>
 </body>
