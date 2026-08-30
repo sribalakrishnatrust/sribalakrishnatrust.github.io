@@ -9,21 +9,21 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --blue: #0F3D6E;
-    --blue-soft: #4A6D93;
-    --gold: #B8862E;
-    --gold-light: #D9AE5D;
-    --maroon: #76251F;
-    --maroon-deep: #5A1B16;
+    --blue: #0B2C52;
+    --blue-soft: #4E6E90;
+    --gold: #A9792F;
+    --gold-light: #D4AF6A;
+    --maroon: #6B2420;
+    --maroon-deep: #451512;
     --paper: #FFFFFF;
-    --paper-dim: #F7F5F0;
-    --ivory: #FBF9F4;
-    --ink: #22262B;
-    --ink-soft: #5B5F66;
-    --line: rgba(15,61,110,0.14);
-    --shadow-sm: 0 1px 3px rgba(15,61,110,0.07);
-    --shadow-md: 0 14px 34px rgba(15,61,110,0.10);
-    --shadow-lg: 0 30px 70px rgba(15,61,110,0.20);
+    --paper-dim: #F6F3EC;
+    --ivory: #FAF7F0;
+    --ink: #1E2228;
+    --ink-soft: #565B63;
+    --line: rgba(11,44,82,0.14);
+    --shadow-sm: 0 1px 3px rgba(11,44,82,0.07);
+    --shadow-md: 0 14px 34px rgba(11,44,82,0.10);
+    --shadow-lg: 0 30px 70px rgba(11,44,82,0.20);
     --accent-bar: 4px;
   }
   *{ margin:0; padding:0; box-sizing:border-box; }
@@ -42,7 +42,7 @@
     letter-spacing:-0.01em;
   }
   a{ color:inherit; }
-  ::selection{ background:rgba(184,134,46,0.25); }
+  ::selection{ background:rgba(169,121,47,0.25); }
 
   /* ---------- Top accent bar ---------- */
   .top-accent-bar{
@@ -68,7 +68,7 @@
     box-shadow:var(--shadow-sm);
   }
   .nav-container{
-    max-width:1180px;
+    max-width:1240px;
     margin:0 auto;
     display:flex;
     justify-content:space-between;
@@ -94,7 +94,7 @@
     width:38px;
     height:38px;
     border-radius:50%;
-    box-shadow:0 0 0 1px var(--line), 0 0 0 4px rgba(184,134,46,0.08);
+    box-shadow:0 0 0 1px var(--line), 0 0 0 4px rgba(169,121,47,0.08);
   }
   .logo-mark img{ display:block; height:38px; width:38px; object-fit:contain; border-radius:50%; }
   .brand-mark{ flex:none; display:block; }
@@ -138,76 +138,115 @@
     text-transform:uppercase;
     transition:background 0.25s, box-shadow 0.25s, transform 0.25s;
     opacity:1 !important;
-    box-shadow:0 10px 22px rgba(118,37,31,0.22);
+    box-shadow:0 10px 22px rgba(107,36,32,0.22);
   }
-  .cta-button:hover{ background:linear-gradient(135deg, var(--maroon-deep) 0%, #400f0c 100%); transform:translateY(-2px); box-shadow:0 16px 30px rgba(118,37,31,0.30); }
+  .cta-button:hover{ background:linear-gradient(135deg, var(--maroon-deep) 0%, #2D0D0B 100%); transform:translateY(-2px); box-shadow:0 16px 30px rgba(107,36,32,0.30); }
   nav .cta-button{ padding:0.6rem 1.4rem; font-size:0.75rem; letter-spacing:0.08em; }
 
   /* ---------- Hero ---------- */
   .hero{
     position:relative;
     overflow:hidden;
-    background:
-      radial-gradient(ellipse 60% 50% at 50% -10%, rgba(15,61,110,0.06), transparent 65%),
-      var(--paper);
-    padding:7rem 2rem 6rem;
+    min-height:88vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
     text-align:center;
-    max-width:900px;
+    width:100%;
+    max-width:none;
+    margin:0;
+    padding:7rem 2rem 5rem;
+    isolation:isolate;
+  }
+  .hero-bg{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center 30%;
+    z-index:-2;
+  }
+  .hero::before{
+    content:'';
+    position:absolute;
+    inset:0;
+    background:
+      linear-gradient(180deg, rgba(8,20,38,0.72) 0%, rgba(11,44,82,0.82) 55%, rgba(8,20,38,0.93) 100%);
+    z-index:-1;
+  }
+  .hero-inner{
+    max-width:760px;
     margin:0 auto;
   }
-  .hero-watermark{
-    position:absolute;
-    top:50%; left:50%;
-    transform:translate(-50%,-50%);
-    width:560px;
-    max-width:none;
-    height:auto;
-    opacity:0.045;
-    filter:grayscale(1);
-    pointer-events:none;
-    z-index:0;
-    user-select:none;
-  }
-  .hero > *{ position:relative; z-index:1; }
+  .hero-watermark{ display:none; }
+  .hero-inner > *{ position:relative; z-index:1; }
   .hero .eyebrow{
     text-transform:uppercase;
     letter-spacing:0.2em;
     font-size:0.75rem;
-    color:var(--gold);
+    color:var(--gold-light);
     font-weight:600;
-    margin-bottom:1.3rem;
+    margin-bottom:1.5rem;
     display:inline-flex;
     align-items:center;
     gap:0.6rem;
     padding-bottom:1rem;
-    border-bottom:1px solid var(--line);
+    border-bottom:1px solid rgba(255,255,255,0.22);
   }
   .hero .eyebrow::before,
   .hero .eyebrow::after{
     content:'✦';
     font-size:0.6rem;
     color:var(--gold-light);
-    opacity:0.8;
+    opacity:0.9;
   }
   .hero h1{
-    font-size:2.95rem;
-    color:var(--blue);
+    font-size:3.2rem;
+    color:#fff;
     margin-bottom:1.3rem;
-    line-height:1.18;
+    line-height:1.16;
     font-weight:500;
-    text-shadow:0 1px 0 rgba(255,255,255,0.4);
+    text-shadow:0 2px 18px rgba(0,0,0,0.35);
   }
   .hero p{
-    font-size:1.1rem;
+    font-size:1.15rem;
     max-width:600px;
-    margin:0 auto 2.3rem;
-    color:var(--ink-soft);
+    margin:0 auto 2.4rem;
+    color:rgba(255,255,255,0.86);
+  }
+  .scroll-cue{
+    position:absolute;
+    left:50%;
+    bottom:2.2rem;
+    transform:translateX(-50%);
+    z-index:1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:0.5rem;
+    color:rgba(255,255,255,0.75);
+    text-decoration:none;
+    font-size:0.68rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    opacity:0.85;
+    transition:opacity 0.2s ease;
+  }
+  .scroll-cue:hover{ opacity:1; }
+  .scroll-cue svg{ animation:scrollBob 2.2s ease-in-out infinite; }
+  @keyframes scrollBob{
+    0%,100%{ transform:translateY(0); }
+    50%{ transform:translateY(6px); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .scroll-cue svg{ animation:none; }
   }
 
   /* ---------- Sections ---------- */
   section{
-    padding:5rem 2rem;
-    max-width:1180px;
+    padding:4.25rem 2rem;
+    max-width:1240px;
     margin:0 auto;
   }
   .eyebrow-small{
@@ -249,28 +288,66 @@
   }
 
   /* ---------- About ---------- */
-  .about-text{
-    max-width:760px;
+  .about-layout{
+    display:grid;
+    grid-template-columns:1.3fr 0.9fr;
+    gap:3rem;
+    align-items:start;
     padding-top:1.5rem;
     border-top:1px solid var(--line);
   }
+  .about-text{ max-width:620px; }
   .about-text p{ color:var(--ink-soft); margin-bottom:1.1rem; font-size:1.05rem; }
   .about-text p strong{ color:var(--blue); }
   .about-text p:first-of-type{
     padding-left:1.2rem;
     border-left:2px solid var(--gold);
   }
+  .about-facts{
+    background:var(--ivory);
+    border:1px solid var(--line);
+    padding:1.8rem 1.8rem;
+  }
+  .about-facts-label{
+    display:block;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    font-size:0.72rem;
+    font-weight:600;
+    color:var(--gold);
+    margin-bottom:1.2rem;
+  }
+  .about-facts dl div{
+    padding:0.85rem 0;
+    border-bottom:1px solid var(--line);
+  }
+  .about-facts dl div:last-child{ border-bottom:none; }
+  .about-facts dt{
+    font-size:0.72rem;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    color:var(--ink-soft);
+    margin-bottom:0.3rem;
+  }
+  .about-facts dd{
+    font-weight:600;
+    font-size:0.95rem;
+    color:var(--blue);
+  }
+  @media (max-width:820px){
+    .about-layout{ grid-template-columns:1fr; }
+  }
 
   /* ---------- Mission ---------- */
   .mission{
     background-color:var(--paper-dim);
-    background-image:radial-gradient(rgba(15,61,110,0.06) 1px, transparent 1px);
+    background-image:radial-gradient(rgba(11,44,82,0.06) 1px, transparent 1px);
     background-size:24px 24px;
     width:100%;
     border-top:1px solid var(--line);
     border-bottom:1px solid var(--line);
   }
-  .mission-inner{ max-width:1180px; margin:0 auto; }
+  .mission-inner{ max-width:1240px; margin:0 auto; }
   .mission-content{ text-align:center; }
   .mission-content > p{ color:var(--ink-soft); }
   .mission-list{
@@ -299,7 +376,7 @@
     width:20px; height:20px;
     border-radius:2px;
     background:linear-gradient(135deg, var(--gold-light), var(--gold));
-    box-shadow:0 3px 8px rgba(184,134,46,0.35);
+    box-shadow:0 3px 8px rgba(169,121,47,0.35);
     color:#fff;
     display:flex;
     align-items:center;
@@ -430,7 +507,7 @@
   .modal-overlay{
     position:fixed;
     inset:0;
-    background:rgba(15,61,110,0.55);
+    background:rgba(11,44,82,0.55);
     display:flex;
     align-items:center;
     justify-content:center;
@@ -522,7 +599,7 @@
     justify-content:center;
     width:52px; height:52px;
     border-radius:50%;
-    background:linear-gradient(135deg, rgba(15,61,110,0.08), rgba(184,134,46,0.14));
+    background:linear-gradient(135deg, rgba(11,44,82,0.08), rgba(169,121,47,0.14));
     font-size:1.5rem;
     margin-bottom:1.1rem;
   }
@@ -612,7 +689,7 @@
   footer{
     position:relative;
     background:var(--paper);
-    background-image:radial-gradient(rgba(15,61,110,0.05) 1px, transparent 1px);
+    background-image:radial-gradient(rgba(11,44,82,0.05) 1px, transparent 1px);
     background-size:24px 24px;
     color:var(--ink);
     padding:3.2rem 2rem 2.2rem;
@@ -627,7 +704,7 @@
     width:120px; height:2px;
     background:linear-gradient(90deg, transparent, var(--gold), transparent);
   }
-  .footer-content{ max-width:1180px; margin:0 auto; }
+  .footer-content{ max-width:1240px; margin:0 auto; }
   .footer-content .footer-name{
     font-family:'Fraunces', serif;
     font-size:1.05rem;
@@ -688,9 +765,8 @@
     .nav-container{ flex-direction:column; gap:0.9rem; padding:0.7rem 1.2rem; }
     nav{ top:var(--accent-bar); }
     nav ul{ gap:1.2rem; flex-wrap:wrap; justify-content:center; }
-    .hero{ padding:3.5rem 1.5rem; }
-    .hero h1{ font-size:2rem; }
-    .hero-watermark{ width:340px; }
+    .hero{ min-height:80vh; padding:3.5rem 1.5rem 4rem; }
+    .hero h1{ font-size:2.1rem; }
     section{ padding:3.2rem 1.5rem; }
     .reg-grid{ grid-template-columns:1fr; }
   }
@@ -719,19 +795,35 @@
   </nav>
   <!-- Hero -->
   <section class="hero">
-    <img src="logo.png" alt="" class="hero-watermark" aria-hidden="true" onerror="this.remove()">
-    <span class="eyebrow">Regd. No. HLS-4-00364-2013-14 · Cox Town, Bengaluru</span>
-    <h1>Sri Bala-krishna Charitable Trust</h1>
-    <p>A registered charitable trust based in Bengaluru, committed to community development, education, and environmental conservation.</p>
-    <a href="#csr" class="cta-button">Become Our CSR Partner</a>
+    <img src="sribalakrishnacharitabletrust.jpg" alt="" class="hero-bg" aria-hidden="true" onerror="this.style.display='none';">
+    <div class="hero-inner">
+      <span class="eyebrow">Regd. No. HLS-4-00364-2013-14 · Cox Town, Bengaluru</span>
+      <h1>Sri Bala-krishna Charitable Trust</h1>
+      <p>A registered charitable trust based in Bengaluru, committed to community development, education, and environmental conservation.</p>
+      <a href="#csr" class="cta-button">Become Our CSR Partner</a>
+    </div>
+    <a href="#about" class="scroll-cue" aria-label="Scroll to learn more">
+      <span>Explore</span>
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 5L8 11L14 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
   </section>
   <!-- About -->
   <section id="about">
     <span class="eyebrow-small" style="text-align:left; display:block;">Who We Are</span>
     <h2 class="section-title section-title-left" style="text-align:left; margin-bottom:2.5rem;">About Us</h2>
-    <div class="about-text">
-      <p><strong>Sri Bala-krishna Charitable Trust (Regd.)</strong> is a registered charitable trust founded in 2013 and based at Cox Town, Bengaluru. The trust was established with a vision to empower communities, support education, and promote environmental sustainability.</p>
-      <p>Our mission extends beyond charity — we build lasting partnerships with organizations and individuals who share our vision of a better world.</p>
+    <div class="about-layout">
+      <div class="about-text">
+        <p><strong>Sri Bala-krishna Charitable Trust (Regd.)</strong> is a registered charitable trust founded in 2013 and based at Cox Town, Bengaluru. The trust was established with a vision to empower communities, support education, and promote environmental sustainability.</p>
+        <p>Our mission extends beyond charity — we build lasting partnerships with organizations and individuals who share our vision of a better world.</p>
+      </div>
+      <div class="about-facts reveal">
+        <span class="about-facts-label">At a Glance</span>
+        <dl>
+          <div><dt>Registration No.</dt><dd>HLS-4-00364-2013-14</dd></div>
+          <div><dt>Registered Office</dt><dd>Cox Town, Bengaluru</dd></div>
+          <div><dt>Focus Areas</dt><dd>Education · Healthcare · Water &amp; Sanitation · Environment</dd></div>
+        </dl>
+      </div>
     </div>
   </section>
   <!-- Mission -->
