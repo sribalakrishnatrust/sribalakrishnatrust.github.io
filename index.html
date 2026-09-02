@@ -421,6 +421,18 @@
     text-align:right;
     color:var(--blue);
   }
+  .contact-email-link{
+    display:inline-block;
+    color:var(--blue);
+    font-weight:600;
+    font-size:1.05rem;
+    text-decoration:underline;
+    text-decoration-color:var(--gold);
+    text-underline-offset:4px;
+    word-break:break-all;
+    transition:color 0.2s ease;
+  }
+  .contact-email-link:hover{ color:var(--gold); }
   .leadership{
     border-top:1px solid var(--line);
     padding-top:2rem;
@@ -774,7 +786,7 @@
         <li><a href="#impact">Impact Areas</a></li>
         <li><a href="#" data-modal-open="registration-modal">Registration</a></li>
         <li><a href="#" data-modal-open="leadership-modal">Leadership</a></li>
-        <li><a href="#csr" class="cta-button">Partner With Us</a></li>
+        <li><a href="#csr" class="cta-button">Become Our CSR Partner</a></li>
       </ul>
     </div>
   </nav>
@@ -854,7 +866,7 @@
     <img src="logo.png" alt="" class="csr-watermark" aria-hidden="true" onerror="this.remove()">
     <section class="csr-section" id="csr">
       <span class="eyebrow-small">Corporate Social Responsibility</span>
-      <h2 class="section-title">Partner With Us</h2>
+      <h2 class="section-title">Become Our CSR Partner</h2>
       <div class="csr-layout">
         <div class="csr-photo-frame reveal">
           <img src="sribalakrishnacharitabletrust.jpg" alt="Sri Bala-krishna Charitable Trust" loading="lazy">
@@ -946,16 +958,14 @@
         <div class="reg-card">
           <h3>Phone</h3>
           <dl>
+            <div><dt>Mobile</dt><dd>+91 94481 07035</dd></div>
             <div><dt>Mobile</dt><dd>+91 80413 22647</dd></div>
             <div><dt>Mobile</dt><dd>+91 85498 05159</dd></div>
-            <div><dt>Mobile</dt><dd>+91 94481 07035</dd></div>
           </dl>
         </div>
         <div class="reg-card">
           <h3>Email</h3>
-          <dl>
-            <div><dt>Email</dt><dd><a href="mailto:balakrishnacharitabletrust@gmail.com">balakrishnacharitabletrust@gmail.com</a></dd></div>
-          </dl>
+          <a class="contact-email-link" href="mailto:balakrishnacharitabletrust@gmail.com">balakrishnacharitabletrust@gmail.com</a>
         </div>
       </div>
     </div>
