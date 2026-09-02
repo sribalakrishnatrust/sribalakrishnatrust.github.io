@@ -422,17 +422,23 @@
     color:var(--blue);
   }
   .contact-email-link{
-    display:inline-block;
+    display:block;
+    background:var(--ivory);
+    border-left:2px solid var(--gold);
+    padding:0.9rem 1.1rem;
+    margin-top:0.2rem;
     color:var(--blue);
     font-weight:600;
-    font-size:1.05rem;
+    font-size:0.85rem;
     text-decoration:underline;
     text-decoration-color:var(--gold);
     text-underline-offset:4px;
-    word-break:break-all;
-    transition:color 0.2s ease;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    transition:color 0.2s ease, background 0.2s ease;
   }
-  .contact-email-link:hover{ color:var(--gold); }
+  .contact-email-link:hover{ color:var(--gold); background:#F4EFE2; }
   .leadership{
     border-top:1px solid var(--line);
     padding-top:2rem;
