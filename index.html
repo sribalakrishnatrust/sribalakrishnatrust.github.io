@@ -142,6 +142,31 @@
   }
   .cta-button:hover{ background:linear-gradient(135deg, var(--maroon-deep) 0%, #2D0D0B 100%); transform:translateY(-2px); box-shadow:0 16px 30px rgba(107,36,32,0.30); }
   nav .cta-button{ padding:0.6rem 1.4rem; font-size:0.75rem; letter-spacing:0.08em; }
+  .cta-secondary{
+    background:transparent;
+    color:var(--blue) !important;
+    border:1.5px solid var(--gold);
+    box-shadow:none;
+  }
+  .cta-secondary:hover{
+    background:var(--gold);
+    color:#fff !important;
+    box-shadow:0 10px 22px rgba(169,121,47,0.28);
+  }
+  .cta-secondary-hero{
+    background:rgba(255,255,255,0.08);
+    border-color:var(--gold-light);
+    color:#fff !important;
+    -webkit-backdrop-filter:blur(4px);
+    backdrop-filter:blur(4px);
+  }
+  .cta-secondary-hero:hover{ background:var(--gold-light); color:var(--blue) !important; }
+  .hero-cta-row{
+    display:flex;
+    gap:1rem;
+    justify-content:center;
+    flex-wrap:wrap;
+  }
 
   /* ---------- Hero ---------- */
   .hero{
@@ -439,6 +464,49 @@
     transition:color 0.2s ease, background 0.2s ease;
   }
   .contact-email-link:hover{ color:var(--gold); background:#F4EFE2; }
+
+  /* ---------- Donate Modal ---------- */
+  .donate-layout{
+    display:grid;
+    grid-template-columns:180px 1fr;
+    gap:1.8rem;
+    align-items:center;
+  }
+  .donate-qr-frame{
+    border:1px solid var(--line);
+    padding:0.6rem;
+    background:#fff;
+    box-shadow:var(--shadow-sm);
+  }
+  .donate-qr-frame img{ width:100%; height:auto; display:block; }
+  .donate-instructions{ color:var(--ink-soft); font-size:0.95rem; margin-bottom:1.2rem; }
+  .donate-dl div{
+    display:flex;
+    justify-content:space-between;
+    gap:1rem;
+    padding:0.6rem 0;
+    border-bottom:1px solid var(--line);
+  }
+  .donate-dl div:last-child{ border-bottom:none; }
+  .donate-dl dt{
+    color:var(--ink-soft);
+    font-size:0.78rem;
+    text-transform:uppercase;
+    letter-spacing:0.05em;
+    flex:none;
+  }
+  .donate-dl dd{
+    font-weight:600;
+    color:var(--blue);
+    font-size:0.9rem;
+    text-align:right;
+  }
+  @media (max-width:560px){
+    .donate-layout{ grid-template-columns:1fr; justify-items:center; text-align:center; }
+    .donate-qr-frame{ max-width:200px; }
+    .donate-dl div{ flex-direction:column; align-items:center; gap:0.2rem; text-align:center; }
+    .donate-dl dd{ text-align:center; }
+  }
   .leadership{
     border-top:1px solid var(--line);
     padding-top:2rem;
@@ -792,6 +860,7 @@
         <li><a href="#impact">Impact Areas</a></li>
         <li><a href="#" data-modal-open="registration-modal">Registration</a></li>
         <li><a href="#" data-modal-open="leadership-modal">Leadership</a></li>
+        <li><a href="#" class="cta-button cta-secondary" data-modal-open="donate-modal">Donate</a></li>
         <li><a href="#csr" class="cta-button">Become Our CSR Partner</a></li>
       </ul>
     </div>
@@ -803,7 +872,10 @@
       <span class="eyebrow">Regd. No. HLS-4-00364-2013-14 · Cox Town, Bengaluru</span>
       <h1>Sri Bala-krishna Charitable Trust</h1>
       <p>A registered charitable trust based in Bengaluru, committed to community development, education, and environmental conservation.</p>
-      <a href="#csr" class="cta-button">Become Our CSR Partner</a>
+      <div class="hero-cta-row">
+        <a href="#" class="cta-button cta-secondary cta-secondary-hero" data-modal-open="donate-modal">Donate</a>
+        <a href="#csr" class="cta-button">Become Our CSR Partner</a>
+      </div>
     </div>
     <a href="#about" class="scroll-cue" aria-label="Scroll to learn more">
       <span>Explore</span>
@@ -897,6 +969,7 @@
         <a href="#mission">Our Mission</a>
         <a href="#impact">Impact Areas</a>
         <a href="#csr">CSR Partnership</a>
+        <a href="#" data-modal-open="donate-modal">Donate</a>
       </div>
       <p class="fine">© 2026 Sri Bala-krishna Charitable Trust (Regd.) · HLS-4-00364-2013-14 · Cox Town, Bengaluru. All rights reserved.</p>
     </div>
@@ -972,6 +1045,26 @@
         <div class="reg-card">
           <h3>Email</h3>
           <a class="contact-email-link" href="mailto:balakrishnacharitabletrust@gmail.com">balakrishnacharitabletrust@gmail.com</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Donate Modal -->
+  <div class="modal-overlay" id="donate-modal" hidden>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="donate-modal-title">
+      <button type="button" class="modal-close" data-modal-close aria-label="Close">&times;</button>
+      <span class="eyebrow-small" style="text-align:left;">Support Our Work</span>
+      <h2 id="donate-modal-title" class="modal-title">Donate via UPI</h2>
+      <div class="donate-layout">
+        <div class="donate-qr-frame">
+          <img src="donate-qr.jpg" alt="UPI QR code to donate to Sri Bala-krishna Charitable Trust" loading="lazy">
+        </div>
+        <div class="donate-details">
+          <p class="donate-instructions">Scan this QR code with any UPI app — Google Pay, PhonePe, Paytm, or BHIM — to send your contribution directly to the trust.</p>
+          <dl class="donate-dl">
+            <div><dt>UPI ID</dt><dd>39440821642@sbi</dd></div>
+            <div><dt>Payee Name</dt><dd>Sri Bala-krishna Charitable Trust</dd></div>
+          </dl>
         </div>
       </div>
     </div>
